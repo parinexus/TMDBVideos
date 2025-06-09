@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.parinexus.tmdbmovies"
+    namespace = "parinexus.tmdb.movies"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.parinexus.tmdbmovies"
+        applicationId = "parinexus.tmdb.movies"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
