@@ -1,4 +1,4 @@
-package com.parinexus.tmdbmovies
+package parinexus.tmdb.movies
 
 import org.junit.Test
 
