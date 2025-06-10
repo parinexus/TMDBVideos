@@ -7,11 +7,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import parinexus.tmdb.movies.data.dataSources.local.entities.FavoriteMovieEntity
 import parinexus.tmdb.movies.data.dataSources.local.entities.MovieCastEntity
-import parinexus.tmdb.movies.data.dataSources.local.entities.MovieEntity
 import parinexus.tmdb.movies.data.utils.Constant.FAVORITE_MOVIES_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.MOVIES_CAST_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.MOVIES_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.TRENDING
+import parinexus.tmdb.movies.domain.models.MovieEntity
 
 @Dao
 interface MovieDao {

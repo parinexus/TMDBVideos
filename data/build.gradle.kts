@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "parinexustmdb.movies.data"
+    namespace = "parinexus.tmdb.movies.data"
     compileSdk = 35
 
     defaultConfig {
@@ -44,6 +44,7 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
     // Networking
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
