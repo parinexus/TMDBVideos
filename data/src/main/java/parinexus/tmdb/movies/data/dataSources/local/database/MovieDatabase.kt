@@ -4,10 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import parinexus.tmdb.movies.data.dataSources.local.entities.FavoriteMovieEntity
 import parinexus.tmdb.movies.data.dataSources.local.entities.MovieCastEntity
-import parinexus.tmdb.movies.data.dataSources.local.entities.MovieEntity
+import parinexus.tmdb.movies.data.dataSources.local.entities.DbMovieEntity
 
 @Database(
-    entities = [MovieEntity::class, MovieCastEntity::class, FavoriteMovieEntity::class],
+    entities = [DbMovieEntity::class, MovieCastEntity::class, FavoriteMovieEntity::class],
     version = 1,
     exportSchema = false
 )

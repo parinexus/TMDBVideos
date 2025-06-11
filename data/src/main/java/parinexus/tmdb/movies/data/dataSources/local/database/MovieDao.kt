@@ -7,30 +7,30 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import parinexus.tmdb.movies.data.dataSources.local.entities.FavoriteMovieEntity
 import parinexus.tmdb.movies.data.dataSources.local.entities.MovieCastEntity
+import parinexus.tmdb.movies.data.dataSources.local.entities.DbMovieEntity
 import parinexus.tmdb.movies.data.utils.Constant.FAVORITE_MOVIES_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.MOVIES_CAST_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.MOVIES_TABLE
 import parinexus.tmdb.movies.data.utils.Constant.TRENDING
-import parinexus.tmdb.movies.domain.models.MovieEntity
 
 @Dao
 interface MovieDao {
 
     // Movies
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertMoviesList(movies: List<MovieEntity>)
+    suspend fun insertMoviesList(movies: List<DbMovieEntity>)
 
     @Query("SELECT * FROM $MOVIES_TABLE")
-    fun getMoviesList(): PagingSource<Int, MovieEntity>
+    fun getMoviesList(): PagingSource<Int, DbMovieEntity>
 
     @Query("SELECT * FROM $MOVIES_TABLE WHERE id = :movieId")
-    suspend fun getMovieById(movieId: Int): MovieEntity
+    suspend fun getMovieById(movieId: Int): DbMovieEntity
 
     @Query("SELECT * FROM $MOVIES_TABLE WHERE category = :category")
-    fun getMoviesListByCategory(category: String): PagingSource<Int, MovieEntity>
+    fun getMoviesListByCategory(category: String): PagingSource<Int, DbMovieEntity>
 
     @Query("SELECT * FROM $MOVIES_TABLE WHERE category = '$TRENDING'")
-    fun getTrendingMovies(): List<MovieEntity>
+    fun getTrendingMovies(): List<DbMovieEntity>
 
     @Query("DELETE FROM $MOVIES_TABLE WHERE category = :category")
     suspend fun clearMoviesByCategory(category: String)

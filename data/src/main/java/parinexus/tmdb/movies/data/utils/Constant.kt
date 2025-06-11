@@ -7,7 +7,7 @@ object Constant {
     const val  MOVIES_DATABASE_NAME = "movies_database"
 
 
-    const val TRENDING = "trendinga"
+    const val TRENDING = "trending"
     const val POPULAR = "popular"
     const val TOP_RATED = "top_rated"
     const val UPCOMING = "upcoming"

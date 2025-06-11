@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import parinexus.tmdb.movies.data.utils.Constant.MOVIES_TABLE
 
 @Entity(tableName = MOVIES_TABLE)
-data class MovieEntity(
+data class DbMovieEntity(
     @PrimaryKey val id: Int,
     val category: String,
 

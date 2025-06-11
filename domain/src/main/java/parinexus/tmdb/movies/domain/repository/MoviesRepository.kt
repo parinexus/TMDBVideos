@@ -2,9 +2,9 @@ package parinexus.tmdb.movies.domain.repository
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import parinexus.tmdb.movies.domain.models.MovieEntity
+import parinexus.tmdb.movies.domain.models.DomainMovieEntity
 
 interface MoviesRepository {
-    fun fetchTrendingMovies(): Flow<List<MovieEntity>>
-    fun fetchMoviesByCategory(category: String): Flow<PagingData<MovieEntity>>
+    fun fetchTrendingMovies(): Flow<List<DomainMovieEntity>>
+    fun fetchMoviesByCategory(category: String): Flow<PagingData<DomainMovieEntity>>
 }

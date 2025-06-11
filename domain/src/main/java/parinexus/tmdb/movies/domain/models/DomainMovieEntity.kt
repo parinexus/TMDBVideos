@@ -1,6 +1,6 @@
 package parinexus.tmdb.movies.domain.models
 
-data class MovieEntity(
+data class DomainMovieEntity(
     val id: Int,
     val category: String,
     val adult: Boolean,

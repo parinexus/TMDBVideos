@@ -1,8 +1,8 @@
 package parinexus.tmdb.movies.data.dataSources.remote
 
+import parinexus.tmdb.movies.data.BuildConfig.API_KEY
 import parinexus.tmdb.movies.data.dataSources.remote.models.movie.MoviesResponse
 import parinexus.tmdb.movies.data.dataSources.remote.models.movieCast.MovieCastResponse
-import parinexustmdb.movies.data.BuildConfig.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
