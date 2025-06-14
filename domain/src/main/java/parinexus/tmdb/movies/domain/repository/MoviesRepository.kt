@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import parinexus.tmdb.movies.domain.models.DomainMovieEntity
 
 interface MoviesRepository {
-    fun fetchTrendingMovies(): Flow<List<DomainMovieEntity>>
+    fun getTrendingMovies(): Flow<List<DomainMovieEntity>>
+    suspend fun refreshTrendingMovies()
     fun fetchMoviesByCategory(category: String): Flow<PagingData<DomainMovieEntity>>
 }
