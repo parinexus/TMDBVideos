@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import parinexus.tmdb.movies.data.dataSources.local.entities.FavoriteMovieEntity
 import parinexus.tmdb.movies.data.dataSources.local.entities.MovieCastEntity
 import parinexus.tmdb.movies.data.dataSources.local.entities.DbMovieEntity
@@ -30,7 +31,7 @@ interface MovieDao {
     fun getMoviesListByCategory(category: String): PagingSource<Int, DbMovieEntity>
 
     @Query("SELECT * FROM $MOVIES_TABLE WHERE category = '$TRENDING'")
-    fun getTrendingMovies(): List<DbMovieEntity>
+    fun getTrendingMovies(): Flow<List<DbMovieEntity>>
 
     @Query("DELETE FROM $MOVIES_TABLE WHERE category = :category")
     suspend fun clearMoviesByCategory(category: String)

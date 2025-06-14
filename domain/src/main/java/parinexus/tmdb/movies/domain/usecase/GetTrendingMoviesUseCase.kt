@@ -8,6 +8,6 @@ class GetTrendingMoviesUseCase(
     private val moviesRepository: MoviesRepository,
 ) {
     operator fun invoke(): Flow<List<DomainMovieEntity>> {
-        return moviesRepository.fetchTrendingMovies()
+        return moviesRepository.getTrendingMovies()
     }
 }

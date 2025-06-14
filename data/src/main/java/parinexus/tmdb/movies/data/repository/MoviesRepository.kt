@@ -6,9 +6,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.room.withTransaction
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import parinexus.tmdb.movies.data.dataSources.local.database.MovieDatabase
 import parinexus.tmdb.movies.data.dataSources.local.entities.DbMovieEntity
 import parinexus.tmdb.movies.domain.models.DomainMovieEntity
@@ -35,15 +37,19 @@ class MoviesRepositoryImpl(
     private val movieDatabase: MovieDatabase,
 ) : MoviesRepository {
 
-    override fun fetchTrendingMovies(): Flow<List<DomainMovieEntity>> = channelFlow {
+    override fun getTrendingMovies(): Flow<List<DomainMovieEntity>> {
+        return movieDatabase.movieDao.getTrendingMovies()
+            .map { list -> list.map { it.toDomainModelWithCategory(TRENDING) } }
+    }
+
+    override suspend fun refreshTrendingMovies() {
         val trendingDtos = moviesApi.getTrendingMovies(1).results
+        val entities = trendingDtos.map { it.toDbEntity(TRENDING) }
 
         movieDatabase.withTransaction {
-            val entities = trendingDtos.map { it.toDbEntity(TRENDING) }
+            movieDatabase.movieDao.clearMoviesByCategory(TRENDING)
             movieDatabase.movieDao.insertMoviesList(entities)
         }
-
-        send(movieDatabase.movieDao.getTrendingMovies().map { it.toDomainModelWithCategory(TRENDING) })
     }
 
 

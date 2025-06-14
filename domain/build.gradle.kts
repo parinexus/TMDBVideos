@@ -6,18 +6,13 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}
 
 dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
 
     // PagingData
-    implementation(libs.androidx.paging.common.ktx)
+    implementation(libs.paging.common.ktx)
 
     // Test
     testImplementation(libs.junit)
