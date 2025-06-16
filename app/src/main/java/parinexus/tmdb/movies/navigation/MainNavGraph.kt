@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import parinexus.tmdb.movies.common.HideNavigationBarOnly
+import parinexus.tmdb.movies.common.SmartNavBarVisibility
 import parinexus.tmdb.movies.presentation.screens.intro.IntroScreen
 import parinexus.tmdb.movies.presentation.screens.splash.SplashScreen
 
@@ -14,7 +14,7 @@ fun MainNavGraph() {
     val navController = rememberNavController()
 
     // Hide navigation bar
-    HideNavigationBarOnly()
+    SmartNavBarVisibility()
 
     NavHost(
         navController = navController,

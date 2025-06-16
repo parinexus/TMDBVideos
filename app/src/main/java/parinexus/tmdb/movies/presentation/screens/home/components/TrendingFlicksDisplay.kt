@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import parinexus.tmdb.movies.R
-import parinexus.tmdb.movies.common.AutoSlidingCarousel
+import parinexus.tmdb.movies.common.InfiniteImageScroller
 import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.utils.UiState
 
@@ -96,7 +96,7 @@ private fun ErrorTrendingMovies() {
 @Composable
 fun DisplayHomeSlider(listMovies: List<PresentationMovieEntity>) {
     Column {
-        AutoSlidingCarousel(
+        InfiniteImageScroller(
             images = listMovies.take(6), modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)

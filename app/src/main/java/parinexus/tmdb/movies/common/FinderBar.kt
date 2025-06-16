@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import parinexus.tmdb.movies.R
 
 @Composable
-fun SearchBar(
+fun FinderBar(
     text: String = "",
     placeholder: String = "Search Movies...",
     isReadOnly: Boolean = false,

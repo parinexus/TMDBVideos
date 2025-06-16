@@ -20,7 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import parinexus.tmdb.movies.common.SearchBar
+import parinexus.tmdb.movies.common.FinderBar
 import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
 import parinexus.tmdb.movies.presentation.screens.home.components.TrendingFlicksDisplay
@@ -58,7 +58,7 @@ fun HomeScreen(
                 .fillMaxWidth()
         )
 
-        SearchBar(
+        FinderBar(
             isReadOnly = true,
             onClick = { onClickSearchBar() }
         )

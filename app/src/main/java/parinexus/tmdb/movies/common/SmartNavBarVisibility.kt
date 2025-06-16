@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 @Composable
-fun HideNavigationBarOnly() {
+fun SmartNavBarVisibility() {
     val context = LocalContext.current
     val view = LocalView.current
     val activity = context as ComponentActivity
