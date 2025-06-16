@@ -24,7 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import parinexus.tmdb.movies.R
-import parinexus.tmdb.movies.common.HideNavigationBarOnly
+import parinexus.tmdb.movies.common.SmartNavBarVisibility
 import parinexus.tmdb.movies.presentation.bottomBar.BottomBar
 import parinexus.tmdb.movies.presentation.bottomBar.BottomNavItem
 import parinexus.tmdb.movies.presentation.screens.home.HomeScreen
@@ -64,7 +64,7 @@ fun ContentNavGraph() {
     }
 
 
-    HideNavigationBarOnly()
+    SmartNavBarVisibility()
 
 
     Scaffold(
