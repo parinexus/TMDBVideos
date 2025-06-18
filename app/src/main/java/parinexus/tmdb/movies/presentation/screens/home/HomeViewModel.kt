@@ -2,13 +2,17 @@ package parinexus.tmdb.movies.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import parinexus.tmdb.movies.data.utils.Constant.POPULAR
+import parinexus.tmdb.movies.domain.usecase.GetMoviesByCategoryUseCase
 import parinexus.tmdb.movies.domain.usecase.GetTrendingMoviesUseCase
 import parinexus.tmdb.movies.domain.usecase.RefreshTrendingMoviesUseCase
+import parinexus.tmdb.movies.mappers.asPresentationFlow
 import parinexus.tmdb.movies.mappers.toPresentation
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeState
@@ -19,6 +23,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val refreshTrendingMoviesUseCase: RefreshTrendingMoviesUseCase,
+    private val getMoviesByCategoryUseCase: GetMoviesByCategoryUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeState())
@@ -26,29 +31,45 @@ class HomeViewModel @Inject constructor(
 
     fun handleIntent(intent: HomeIntent) {
         when (intent) {
-            is HomeIntent.LoadTrendingMovies -> getTrendingMovies()
+            is HomeIntent.FetchTrendingMovies -> getTrendingMovies()
+            is HomeIntent.FetchPopularMovies -> getPopularMovies()
         }
     }
 
     private fun getTrendingMovies() {
         viewModelScope.launch {
-            _uiState.update { it.copy(trendingMovies = UiState.Loading) }
+            _uiState.update { it.copy(trendingMoviesState = UiState.Loading) }
 
             try {
                 refreshTrendingMoviesUseCase()
 
                 getTrendingMoviesUseCase().collect { trendingMoviesList ->
                     _uiState.update {
-                        it.copy(trendingMovies = UiState.Success(trendingMoviesList.map { movieItem ->
+                        it.copy(trendingMoviesState = UiState.Success(trendingMoviesList.map { movieItem ->
                             movieItem.toPresentation()
                         }))
                     }
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(trendingMovies = UiState.Error(e.message ?: "Unknown error"))
+                    it.copy(trendingMoviesState = UiState.Error(e.message ?: "Unknown error"))
                 }
             }
         }
     }
+
+    private fun getPopularMovies() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(popularMoviesState = UiState.Loading) }
+            try {
+                val popularMovies =
+                    getMoviesByCategoryUseCase(POPULAR).cachedIn(viewModelScope)
+                _uiState.update { it.copy(popularMoviesState = UiState.Success(popularMovies.asPresentationFlow())) }
+
+            } catch (e: Exception) {
+                _uiState.update { it.copy(popularMoviesState = UiState.Error(e.message.toString())) }
+            }
+        }
+    }
+
 }

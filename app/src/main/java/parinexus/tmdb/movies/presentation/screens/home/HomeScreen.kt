@@ -21,8 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import parinexus.tmdb.movies.common.FinderBar
+import parinexus.tmdb.movies.data.utils.Constant.POPULAR
 import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
+import parinexus.tmdb.movies.presentation.screens.home.components.HorizontalPosterSection
+import parinexus.tmdb.movies.presentation.screens.home.components.Section
 import parinexus.tmdb.movies.presentation.screens.home.components.TrendingFlicksDisplay
 
 @Composable
@@ -35,7 +38,8 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.handleIntent(HomeIntent.LoadTrendingMovies)
+        viewModel.handleIntent(HomeIntent.FetchTrendingMovies)
+        viewModel.handleIntent(HomeIntent.FetchPopularMovies)
     }
 
 
@@ -66,10 +70,16 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        TrendingFlicksDisplay(uiState.trendingMovies)
+        TrendingFlicksDisplay(uiState.trendingMoviesState)
 
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        Section(title = "Most Watched") {
+            HorizontalPosterSection(POPULAR, uiState.popularMoviesState) { movie ->
+                navigateToDetails(movie)
+            }
+        }
     }
 
 }
