@@ -62,8 +62,20 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    // Dagger Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
+    testImplementation(libs.junit)
+    testImplementation(libs.truth)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.paging.common.ktx)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.room.ktx)
+    testImplementation(libs.room.runtime)
+    testImplementation(libs.room.paging)
+    testImplementation(libs.room.compiler)
+    testImplementation(libs.test.core)
+    testImplementation(libs.test.rules)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.mockwebserver)
 }
