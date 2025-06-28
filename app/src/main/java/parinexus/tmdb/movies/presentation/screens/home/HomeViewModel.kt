@@ -2,18 +2,21 @@ package parinexus.tmdb.movies.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import parinexus.tmdb.movies.data.utils.Constant.POPULAR
 import parinexus.tmdb.movies.domain.usecase.GetMoviesByCategoryUseCase
 import parinexus.tmdb.movies.domain.usecase.GetTrendingMoviesUseCase
 import parinexus.tmdb.movies.domain.usecase.RefreshTrendingMoviesUseCase
 import parinexus.tmdb.movies.mappers.asPresentationFlow
 import parinexus.tmdb.movies.mappers.toPresentation
+import parinexus.tmdb.movies.models.MovieCategory
+import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeState
 import parinexus.tmdb.movies.utils.UiState
@@ -32,7 +35,7 @@ class HomeViewModel @Inject constructor(
     fun handleIntent(intent: HomeIntent) {
         when (intent) {
             is HomeIntent.FetchTrendingMovies -> getTrendingMovies()
-            is HomeIntent.FetchPopularMovies -> getPopularMovies()
+            is HomeIntent.FetchMoviesByCategory -> getMoviesByCategory(intent.category)
         }
     }
 
@@ -58,18 +61,39 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getPopularMovies() {
+    private fun getMoviesByCategory(category: MovieCategory) {
         viewModelScope.launch {
-            _uiState.update { it.copy(popularMoviesState = UiState.Loading) }
+            updateCategoryState(category = category, state = UiState.Loading)
             try {
                 val popularMovies =
-                    getMoviesByCategoryUseCase(POPULAR).cachedIn(viewModelScope)
-                _uiState.update { it.copy(popularMoviesState = UiState.Success(popularMovies.asPresentationFlow())) }
-
+                    getMoviesByCategoryUseCase(category.apiConst).cachedIn(viewModelScope)
+                updateCategoryState(
+                    category = category,
+                    state = UiState.Success(popularMovies.asPresentationFlow())
+                )
             } catch (e: Exception) {
-                _uiState.update { it.copy(popularMoviesState = UiState.Error(e.message.toString())) }
+                updateCategoryState(
+                    category = category,
+                    state = UiState.Error(e.message.toString())
+                )
             }
         }
     }
 
+    private fun updateCategoryState(
+        category: MovieCategory,
+        state: UiState<Flow<PagingData<PresentationMovieEntity>>>
+    ) = setState {
+        when (category) {
+            MovieCategory.Popular -> copy(popularMoviesState = state)
+
+            MovieCategory.TopRated -> copy(topPicksMovies = state)
+
+            MovieCategory.Upcoming -> copy(comingSoonMoviesState = state)
+        }
+    }
+
+    private inline fun setState(reducer: HomeState.() -> HomeState) {
+        _uiState.update(reducer)
+    }
 }
