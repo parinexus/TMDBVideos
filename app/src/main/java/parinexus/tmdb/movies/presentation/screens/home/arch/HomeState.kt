@@ -8,4 +8,6 @@ import parinexus.tmdb.movies.utils.UiState
 data class HomeState(
     val trendingMoviesState: UiState<List<PresentationMovieEntity>> = UiState.Loading,
     val popularMoviesState: UiState<Flow<PagingData<PresentationMovieEntity>>> = UiState.Loading,
+    val comingSoonMoviesState: UiState<Flow<PagingData<PresentationMovieEntity>>> = UiState.Loading,
+    val topPicksMovies: UiState<Flow<PagingData<PresentationMovieEntity>>> = UiState.Loading,
 )
