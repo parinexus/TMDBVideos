@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import parinexus.tmdb.movies.common.FinderBar
 import parinexus.tmdb.movies.data.utils.Constant.POPULAR
+import parinexus.tmdb.movies.data.utils.Constant.TOP_RATED
+import parinexus.tmdb.movies.data.utils.Constant.UPCOMING
+import parinexus.tmdb.movies.models.MovieCategory
 import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
 import parinexus.tmdb.movies.presentation.screens.home.components.HorizontalPosterSection
@@ -39,7 +42,9 @@ fun HomeScreen(
 
     LaunchedEffect(Unit) {
         viewModel.handleIntent(HomeIntent.FetchTrendingMovies)
-        viewModel.handleIntent(HomeIntent.FetchPopularMovies)
+        viewModel.handleIntent(HomeIntent.FetchMoviesByCategory(MovieCategory.Popular))
+        viewModel.handleIntent(HomeIntent.FetchMoviesByCategory(MovieCategory.Upcoming))
+        viewModel.handleIntent(HomeIntent.FetchMoviesByCategory(MovieCategory.TopRated))
     }
 
 
@@ -77,6 +82,22 @@ fun HomeScreen(
 
         Section(title = "Most Watched") {
             HorizontalPosterSection(POPULAR, uiState.popularMoviesState) { movie ->
+                navigateToDetails(movie)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Section(title = "Next in Line") {
+            HorizontalPosterSection(UPCOMING, uiState.comingSoonMoviesState)  { movie ->
+                navigateToDetails(movie)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Section(title = "Top Picks") {
+            HorizontalPosterSection(TOP_RATED, uiState.topPicksMovies)  { movie ->
                 navigateToDetails(movie)
             }
         }
