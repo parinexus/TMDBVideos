@@ -1,6 +1,5 @@
 package parinexus.tmdb.movies.data.paging
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -56,13 +55,10 @@ class UpcomingMoviesPagingMediator(
 
             MediatorResult.Success(endOfPaginationReached = currentPage >= totalPages)
         } catch (e: IOException) {
-            Log.e("UpcomingMoviesMediator", "IO error: ${e.localizedMessage}")
             MediatorResult.Error(e)
         } catch (e: HttpException) {
-            Log.e("UpcomingMoviesMediator", "HTTP error: ${e.localizedMessage}")
             MediatorResult.Error(e)
         } catch (e: Exception) {
-            Log.e("UpcomingMoviesMediator", "Unknown error: ${e.localizedMessage}")
             MediatorResult.Error(e)
         }
     }

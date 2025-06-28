@@ -1,6 +1,5 @@
 package parinexus.tmdb.movies.presentation.bottomBar
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -19,7 +18,6 @@ fun BottomBar(
     selectedItem: Int,
     onItemClick: (Int) -> Unit,
 ) {
-    Log.i("BottomBar", "BottomBar: ${items.size}")
     NavigationBar(
         containerColor = colorResource(id = R.color.black3),
         contentColor = Color.Gray

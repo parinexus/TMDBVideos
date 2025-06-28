@@ -80,6 +80,8 @@ fun HomeScreen(
                 navigateToDetails(movie)
             }
         }
+
+
     }
 
 }
