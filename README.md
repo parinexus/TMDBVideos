@@ -1,22 +1,22 @@
 ````markdown
 # TMDBVideos
 
-**TMDBVideos** is an Android application for browsing movies sourced from  
+TMDBVideos is an Android application for browsing movies sourced from  
 [The Movie Database (TMDB)](https://www.themoviedb.org/).  
-It’s built entirely with **Kotlin**, **Jetpack Compose**, and a clean-architecture
+It’s built entirely with Kotlin, Jetpack Compose, and a clean-architecture
 approach.
 
 ---
 
 ## ✨ Features
 
-- **Trending** – discover what’s popular this week at a glance.  
-- **Movie categories** – quickly hop between **Popular**, **Upcoming**, and  
-  **Top Rated** lists.  
-- **Offline caching** – Room + Paging keeps previously viewed data available
+- Trending – discover what’s popular this week at a glance.  
+- Movie categories – quickly hop between Popular, Upcoming, and  
+  Top Rated lists.  
+- Offline caching – Room + Paging keeps previously viewed data available
   when you’re offline.  
-- **Favorites** – mark the movies you love for instant access later.  
-- **Modern UI** – Material 3 components, smooth animations, dark-theme support,
+- Favorites – mark the movies you love for instant access later.  
+- Modern UI – Material 3 components, smooth animations, dark-theme support,
   and Hilt-powered dependency injection.
 
 ---
