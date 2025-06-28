@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,35 +38,14 @@ fun TrendingFlicksDisplay(uiState: UiState<List<PresentationMovieEntity>>) {
         }
 
         is UiState.Success -> {
-            val movies = uiState.data.orEmpty().takeIf { it.isNotEmpty() }
-            if (movies != null) {
+            uiState.data.orEmpty().takeIf { it.isNotEmpty() }?.let { movies->
                 DisplayHomeSlider(movies)
-            } else {
-                EmptyTrendingMovies()
             }
         }
 
         is UiState.Error -> {
             ErrorTrendingMovies()
         }
-    }
-}
-
-@Composable
-private fun EmptyTrendingMovies() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .padding(16.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF2F2F39)),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "No trending movies at the moment—check back soon!",
-            color = Color.White.copy(alpha = 0.7f)
-        )
     }
 }
 
