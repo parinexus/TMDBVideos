@@ -1,5 +1,9 @@
 package parinexus.tmdb.movies.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class PresentationMovieEntity(
     val id: Int,
     val category: String,
@@ -16,4 +20,4 @@ data class PresentationMovieEntity(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-)
+): Parcelable
