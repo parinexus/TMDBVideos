@@ -32,6 +32,10 @@ import parinexus.tmdb.movies.presentation.screens.home.HomeViewModel
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import parinexus.tmdb.movies.models.PresentationMovieEntity
+import parinexus.tmdb.movies.presentation.screens.details.MovieDetailsScreen
+import parinexus.tmdb.movies.presentation.screens.details.MovieDetailsViewModel
 
 @Composable
 fun ContentNavGraph() {
@@ -127,7 +131,12 @@ fun ContentNavGraph() {
                                 restoreState = true
                             }  // 1 ==> translate to search screen
                         },
-                        navigateToDetails = {})
+                        navigateToDetails = { movie ->
+                            navigateToDetails(
+                                navController = navController,
+                                movie = movie
+                            )
+                        })
                 }
                 composable(route = Screen.SearchScreen.route) { backStackEntry ->
 
@@ -140,6 +149,19 @@ fun ContentNavGraph() {
                     val parentEntry = remember(backStackEntry) {
                         navController.getBackStackEntry(Screen.HomeScreen.route)
                     }
+                }
+
+                composable(route = Screen.DetailsScreen.route) { backStackEntry ->
+                    val viewModel: MovieDetailsViewModel = hiltViewModel()
+
+                    navController.previousBackStackEntry?.savedStateHandle?.get<PresentationMovieEntity?>(
+                        "movie"
+                    )
+                        ?.let { movie ->
+                            MovieDetailsScreen(movie = movie, viewModel = viewModel, onBackClick = {
+                                navController.popBackStack()
+                            })
+                        }
                 }
             }
 
@@ -176,5 +198,12 @@ fun BlurredGradientBackground() {
                 )
             )
             .blur(28.dp)
+    )
+}
+
+fun navigateToDetails(navController: NavHostController, movie: PresentationMovieEntity) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
+    navController.navigate(
+        route = Screen.DetailsScreen.route
     )
 }
