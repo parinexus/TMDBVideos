@@ -54,7 +54,6 @@ class MovieDaoTest {
             )
         )
 
-        // Check returned items
         val data = (loadResult as PagingSource.LoadResult.Page).data
         assertEquals(1, data.size)
         assertEquals("Title", data[0].title)

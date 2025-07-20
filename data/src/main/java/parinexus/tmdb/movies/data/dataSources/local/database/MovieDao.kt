@@ -17,7 +17,6 @@ import parinexus.tmdb.movies.data.utils.Constant.TRENDING
 @Dao
 interface MovieDao {
 
-    // Movies
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMoviesList(movies: List<DbMovieEntity>)
 
@@ -36,16 +35,14 @@ interface MovieDao {
     @Query("DELETE FROM $MOVIES_TABLE WHERE category = :category")
     suspend fun clearMoviesByCategory(category: String)
 
-    // Cast
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertMovieCastList(castList: List<MovieCastEntity>)
 
     @Query("SELECT * FROM $MOVIES_CAST_TABLE WHERE movieId = :movieId")
     fun getMovieCastById(movieId: Int): List<MovieCastEntity>
 
-    // Favorites
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertFavoriteMovie(movie: FavoriteMovieEntity)
+    suspend fun insertFavoriteMovie(movie: FavoriteMovieEntity)
 
     @Query("SELECT * FROM $FAVORITE_MOVIES_TABLE")
     suspend fun getAllFavoriteMovies(): List<FavoriteMovieEntity>

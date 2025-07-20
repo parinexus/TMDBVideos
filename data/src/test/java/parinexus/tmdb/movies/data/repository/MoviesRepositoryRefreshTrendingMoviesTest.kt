@@ -48,7 +48,6 @@ class MoviesRepositoryRefreshTrendingMoviesTest {
 
     @Test
     fun `refreshTrendingMovies clears and inserts movies from API`() = runTest {
-        // Given
         val apiMovie = Movie(
             id = 12,
             title = "Test",
@@ -76,10 +75,8 @@ class MoviesRepositoryRefreshTrendingMoviesTest {
 
         coEvery { moviesApi.getTrendingMovies(any()) } returns apiResponse
 
-        // When
         repository.refreshTrendingMovies()
 
-        // Then
         val movies = database.movieDao.getMoviesListByCategory(TRENDING).load(
             androidx.paging.PagingSource.LoadParams.Refresh(
                 key = 0,
