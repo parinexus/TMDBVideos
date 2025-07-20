@@ -124,10 +124,15 @@ fun FavoriteMovieEntity.favToDomainMovieEntity(): DomainMovieEntity {
         video = video,
 
         genreIds = try {
-            genreIds.split(",").map { it.toInt() }
+            genreIds
+                .replace("[", "")
+                .replace("]", "")
+                .split(",")
+                .map { it.trim().toInt() }
+                .toString()
         } catch (e: Exception) {
-            listOf(-1, -2)
-        }.toString(),
+            listOf(-1, -2).toString()
+        },
 
         category = "",
     )
@@ -148,11 +153,6 @@ fun DomainMovieEntity.domainToFavMovieEntity(): FavoriteMovieEntity {
         id = id,
         originalTitle = originalTitle,
         video = video,
-
-        genreIds = try {
-            genreIds.split(",").map { it.toInt() }
-        } catch (e: Exception) {
-            listOf(-1, -2)
-        }.toString(),
+        genreIds = genreIds,
     )
 }
