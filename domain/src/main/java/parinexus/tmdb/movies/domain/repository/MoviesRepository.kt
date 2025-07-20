@@ -15,4 +15,5 @@ interface MoviesRepository {
 
     suspend fun addFavoriteMovie(movie: DomainMovieEntity)
     suspend fun deleteFavoriteMovie(movieId: Int)
+    fun fetchFavoriteMovies(): Flow<List<DomainMovieEntity>>
 }

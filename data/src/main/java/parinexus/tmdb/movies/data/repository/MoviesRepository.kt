@@ -8,10 +8,10 @@ import androidx.paging.map
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import parinexus.tmdb.movies.data.dataSources.local.database.MovieDatabase
 import parinexus.tmdb.movies.data.dataSources.local.entities.DbMovieEntity
-import parinexus.tmdb.movies.data.dataSources.local.entities.MovieCastEntity
 import parinexus.tmdb.movies.domain.models.DomainMovieEntity
 import parinexus.tmdb.movies.data.dataSources.remote.MoviesApi
 import parinexus.tmdb.movies.data.mapper.domainToFavMovieEntity
@@ -103,11 +103,17 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun addFavoriteMovie(movie: DomainMovieEntity) {
-        movieDatabase.movieDao.upsertFavoriteMovie(movie.domainToFavMovieEntity())
+        movieDatabase.movieDao.insertFavoriteMovie(movie.domainToFavMovieEntity())
     }
 
     override suspend fun deleteFavoriteMovie(movieId: Int) {
         movieDatabase.movieDao.deleteFavoriteMovie(movieId)
     }
 
+    override fun fetchFavoriteMovies(): Flow<List<DomainMovieEntity>> {
+        return flow {
+            val favoriteMovies = movieDatabase.movieDao.getAllFavoriteMovies()
+            emit(favoriteMovies.map { it.favToDomainMovieEntity() })
+        }
+    }
 }

@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import parinexus.tmdb.movies.domain.repository.MoviesRepository
+import parinexus.tmdb.movies.domain.usecase.FetchFavoriteMoviesUseCase
 import parinexus.tmdb.movies.domain.usecase.FetchMovieCastUseCase
 import parinexus.tmdb.movies.domain.usecase.GetMoviesByCategoryUseCase
 import parinexus.tmdb.movies.domain.usecase.GetTrendingMoviesUseCase
@@ -51,6 +52,16 @@ object UseCaseModule {
         moviesRepository: MoviesRepository,
     ): FetchMovieCastUseCase {
         return FetchMovieCastUseCase(
+            moviesRepository
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideFetchFavoriteMoviesUseCase(
+        moviesRepository: MoviesRepository,
+    ): FetchFavoriteMoviesUseCase {
+        return FetchFavoriteMoviesUseCase(
             moviesRepository
         )
     }
