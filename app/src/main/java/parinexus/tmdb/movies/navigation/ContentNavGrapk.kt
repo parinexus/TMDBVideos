@@ -36,6 +36,8 @@ import androidx.navigation.NavHostController
 import parinexus.tmdb.movies.models.PresentationMovieEntity
 import parinexus.tmdb.movies.presentation.screens.details.MovieDetailsScreen
 import parinexus.tmdb.movies.presentation.screens.details.MovieDetailsViewModel
+import parinexus.tmdb.movies.presentation.screens.favorite.FavoriteMoviesViewModel
+import parinexus.tmdb.movies.presentation.screens.favorite.FavoritesScreen
 
 @Composable
 fun ContentNavGraph() {
@@ -144,12 +146,6 @@ fun ContentNavGraph() {
                         navController.getBackStackEntry(Screen.HomeScreen.route)
                     }
                 }
-                composable(route = Screen.FavoriteMoviesScreen.route) { backStackEntry ->
-
-                    val parentEntry = remember(backStackEntry) {
-                        navController.getBackStackEntry(Screen.HomeScreen.route)
-                    }
-                }
 
                 composable(route = Screen.DetailsScreen.route) { backStackEntry ->
                     val viewModel: MovieDetailsViewModel = hiltViewModel()
@@ -162,6 +158,22 @@ fun ContentNavGraph() {
                                 navController.popBackStack()
                             })
                         }
+                }
+
+                composable(route = Screen.FavoriteMoviesScreen.route) {backStackEntry ->
+
+                    val parentEntry = remember(backStackEntry) {
+                        navController.getBackStackEntry(Screen.HomeScreen.route)
+                    }
+                    val viewModel: FavoriteMoviesViewModel = hiltViewModel(parentEntry)
+                    FavoritesScreen(
+                        viewModel, onMovieSelected = { movie ->
+                            navigateToDetails(
+                                navController = navController,
+                                movie = movie
+                            )
+                        }
+                    )
                 }
             }
 
