@@ -14,6 +14,7 @@ import parinexus.tmdb.movies.domain.usecase.GetMoviesByCategoryUseCase
 import parinexus.tmdb.movies.domain.usecase.GetTrendingMoviesUseCase
 import parinexus.tmdb.movies.domain.usecase.RefreshTrendingMoviesUseCase
 import parinexus.tmdb.movies.mappers.toPresentation
+import parinexus.tmdb.movies.models.MovieCategory
 import parinexus.tmdb.movies.presentation.screens.home.arch.HomeIntent
 import parinexus.tmdb.movies.utils.UiState
 
@@ -114,7 +115,7 @@ class HomeViewModelTest {
         coEvery { getMoviesByCategoryUseCase(any()) } returns fakePagingDataFlow
 
         viewModel.uiState.test {
-            viewModel.handleIntent(HomeIntent.FetchPopularMovies)
+            viewModel.handleIntent(HomeIntent.FetchMoviesByCategory(MovieCategory.Popular))
             advanceUntilIdle()
 
             val state = expectMostRecentItem()
@@ -128,7 +129,7 @@ class HomeViewModelTest {
         coEvery { getMoviesByCategoryUseCase(any()) } throws RuntimeException(exceptionMessage)
 
         viewModel.uiState.test {
-            viewModel.handleIntent(HomeIntent.FetchPopularMovies)
+            viewModel.handleIntent(HomeIntent.FetchMoviesByCategory(MovieCategory.Popular))
             advanceUntilIdle()
 
             val state = expectMostRecentItem()
