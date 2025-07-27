@@ -74,8 +74,7 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-
-        TrendingFlicksDisplay(uiState.trendingMoviesState)
+//        TrendingFlicksDisplay(uiState.trendingMoviesState)
 
 
         Spacer(modifier = Modifier.height(8.dp))

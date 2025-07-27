@@ -34,8 +34,21 @@ class HomeViewModel @Inject constructor(
 
     fun handleIntent(intent: HomeIntent) {
         when (intent) {
-            is HomeIntent.FetchTrendingMovies -> getTrendingMovies()
-            is HomeIntent.FetchMoviesByCategory -> getMoviesByCategory(intent.category)
+            is HomeIntent.FetchTrendingMovies -> {
+                if (_uiState.value.trendingMoviesState !is UiState.Success) {
+                    getTrendingMovies()
+                }
+            }
+            is HomeIntent.FetchMoviesByCategory -> {
+                val categoryState = when (intent.category) {
+                    MovieCategory.Popular -> _uiState.value.popularMoviesState
+                    MovieCategory.TopRated -> _uiState.value.topPicksMovies
+                    MovieCategory.Upcoming -> _uiState.value.comingSoonMoviesState
+                }
+                if (categoryState !is UiState.Success) {
+                    getMoviesByCategory(intent.category)
+                }
+            }
         }
     }
 
